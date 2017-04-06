@@ -1,0 +1,7 @@
+<h1>Edit Question</h1>
+
+<%# if you pass a pesisted ActiveRecord object to the `form_for` (in the DB)
+    then `form_for` will submit a `PATCH` request (instead of POST) using a
+    hidden_field technique and the URL for the form will be in the case the
+    `update` action url which is in our case question_path(@question) %>
+<%= render 'form' %>
