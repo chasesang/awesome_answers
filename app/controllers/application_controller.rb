@@ -16,15 +16,14 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user!
     if !user_signed_in?
-    redirect_to new_session_path, notice: "You must be signed in!"
+      redirect_to new_session_path, notice: 'You must be signed in!'
+    end
   end
-end
 
   # def can_edit_question?(question)
-  #   user_signed_in? && @question.user == current_user
+  #   user_signed_in? && (question.user == current_user)
   # end
   # helper_method :can_edit_question?
-
 
 
 end

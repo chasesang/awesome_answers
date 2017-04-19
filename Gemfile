@@ -67,7 +67,7 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-
+  gem "letter_opener"
   gem 'interactive_editor'
   gem 'awesome_print'
   gem 'rails-erd'
