@@ -11,8 +11,8 @@ def create
   # @answer = @queston.answers.build(answer_params)
 
   if @answer.save
-    # sending an emial to the owner of the question. 
-    AnswersMailer.notify_question_owner(@answer).deliver_now
+    # sending an emial to the owner of the question.
+    AnswersMailer.notify_question_owner(@answer).deliver_later
   redirect_to question_path(@question), notice: 'Answer Created!'
   else
 

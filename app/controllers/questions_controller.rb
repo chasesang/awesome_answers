@@ -32,6 +32,7 @@ def create
     @question = Question.new question_params
     @question.user = current_user
     if @question.save
+      RemindQuestionOwnerJob.set(wait:5.days).perform_later(@question.id)
       # redirect_to question_path({id: @question.id})
       # redirect_to question_path(@question.id)
       # Rails gives us access to `flash` object which looks like a Hash. flash
