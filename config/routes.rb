@@ -22,6 +22,7 @@ match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
 
   resources :questions do
     resources :answers, only: [:create, :destroy]
+    resources :likes, only: [:create, :destroy]
 
     # Nesting resources :answers, only: [:create, :destroy] in resources :questions
     # will create the following routes:
@@ -33,6 +34,7 @@ match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
     # When using their helper methods to generate the path to the routes (e.g. question_answers_path)
     # make sure to include a question_id as argument or a question model
   end
+
 resources :users, only: [:new, :create]
 resources :sessions, only: [:new, :create] do
    # when you define a route with `on: :collection` option, it skips having an

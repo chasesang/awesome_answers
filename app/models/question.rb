@@ -4,6 +4,9 @@
 # from `ActiveRecord::Base` which leverages Ruby's meta programming features.
 class Question < ApplicationRecord
   has_many :answers, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :likers, through: :likes, source: :user
+
 
   #dependent: :destroy will delte all the answers befor edeleting the questions when you call `question.destroy`
 

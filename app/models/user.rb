@@ -24,6 +24,8 @@ class User < ApplicationRecord
 
   before_validation :downcase_email
   has_many :questions, dependent: :nullify
+  has_many :likes, dependent: :destroy
+  has_many :liked_question, through: :likes, source: :question
   private
   def downcase_email
     self.email.downcase! if email.present?
