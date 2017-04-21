@@ -65,6 +65,13 @@ class Question < ApplicationRecord
                              def self.recent(number)
                                order(created_at: :desc).limit(number)
                              end
+                             def liked_by?(user)
+                               likes.exists?(user: user)
+                             end
+
+                             def like_for(user)
+                               likes.find_by(user: user)
+                             end
 
                              private
 

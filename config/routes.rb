@@ -35,7 +35,10 @@ match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
     # make sure to include a question_id as argument or a question model
   end
 
-resources :users, only: [:new, :create]
+resources :users, only: [:new, :create] do
+  resources :likes, only: [:index]
+end
+
 resources :sessions, only: [:new, :create] do
    # when you define a route with `on: :collection` option, it skips having an
    # `:id` or `:session_id` as part of the generated URL
