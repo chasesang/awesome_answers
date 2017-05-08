@@ -3,6 +3,11 @@
 <p>Created On: <%= standard_date_format(@question.created_at) %></p>
 <p><strong>Subject:</strong><%= @question.subject&.name %> </p>
 <!-- <p><strong>Subject:</strong><%= @question.subject.name if  @question.subject %> </p> -->
+<!-- <p>Tags: <%= @question.tags.map(&:name).join(', ') %></p> -->
+
+<p>Tags: <%= @question.tags.pluck(:name).join(', ') %>
+  <br>
+
 <% like = @question.likes.find_by(user: current_user) %>
 
 <% if user_signed_in? && can?(:like, @question) %>
@@ -13,6 +18,42 @@
   <% end %>
 <% end %>
 <span><%= pluralize(@question.likes.count, 'like') %></span>
+
+
+
+<% user_vote = @question.votes.find_by(user: current_user) %>
+<div class='vote-section'>
+  <% if user_vote.nil? %>
+    <%= link_to fa_icon('thumbs-o-up'), question_votes_path(@question, { is_up: true }),
+                                        method: :post %>
+
+    <%= link_to fa_icon('thumbs-o-down'), question_votes_path(@question, { is_up: false }),
+                                          method: :post %>
+  <% elsif user_vote.is_up? %>
+    <%= link_to fa_icon('thumbs-up'), question_vote_path(@question, user_vote),
+                                      method: :delete %>
+
+    <%= link_to  fa_icon('thumbs-o-down'), question_vote_path(@question,
+                                                user_vote,
+                                                { is_up: false }),
+                                            method: :patch %>
+  <% else %>
+    <%= link_to fa_icon('thumbs-o-up'), question_vote_path(@question,
+                                              user_vote,
+                                              { is_up: true }),
+                                        method: :patch %>
+    <%= link_to fa_icon('thumbs-down'), question_vote_path(@question, user_vote),
+                                        method: :delete %>
+  <% end %>
+  (
+   <%= @question.votes_count %>
+ )
+</div>
+
+
+
+
+
 
 
 

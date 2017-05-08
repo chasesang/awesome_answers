@@ -45,18 +45,18 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-
+gem 'chosen-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
+gem 'active_model_serializers'
 gem 'cowsay', '~> 0.3'
 
 gem 'colorize', '0.8.1'
-
+gem 'rack-cors'
 gem 'faker'
-
+gem 'friendly_id'
 gem 'cancancan', '~> 1.10'
-
+gem 'simple_form'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'delayed_job_active_record'
 gem 'sinatra', '2.0.0.rc2'

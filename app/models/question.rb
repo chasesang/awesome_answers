@@ -7,6 +7,12 @@ class Question < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :likers, through: :likes, source: :user
 
+  has_many :votes, dependent: :destroy
+  has_many :voters, through: :votes, source: :user
+
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings
+
 
   #dependent: :destroy will delte all the answers befor edeleting the questions when you call `question.destroy`
 
@@ -18,7 +24,8 @@ class Question < ApplicationRecord
    belongs_to :subject, optional: true
 
    belongs_to :user, optional: true
-
+   extend FriendlyId
+   friendly_id :title, use: [:slugged, :history, :finders]
   # has_many :answers adds the following instance methods
   # to this model, Question:
   # answers
@@ -72,7 +79,15 @@ class Question < ApplicationRecord
                              def like_for(user)
                                likes.find_by(user: user)
                              end
+                             def votes_count
+                               votes.where(is_up: true).count - votes.where(is_up: false).count
+                             end
 
+                             # Rails uses `to_param` method in ActiveRecord to know what to use for the
+                             # URL, by default `to_param` methods will return the `id`
+                            #  def to_param
+                            #    "#{id}-#{title}".parameterize
+                            #  end
                              private
 
                              def titleize_title
@@ -82,6 +97,7 @@ class Question < ApplicationRecord
                              def set_defaults
                                self.view_count ||= 0
                              end
+
 
                              def no_monkey
                                if title.present? && title.downcase.include?('monkey')

@@ -21,14 +21,21 @@ class User < ApplicationRecord
   validates :email, presence: true,
                     uniqueness: { case_sensitive: false },
                     format: VALID_EMAIL_REGEX
-
+ before_create :generate_api_token
   before_validation :downcase_email
   has_many :questions, dependent: :nullify
   has_many :likes, dependent: :destroy
   has_many :liked_question, through: :likes, source: :question
+  has_many :votes, dependent: :destroy
+  has_many :voted_questions, through: :votes, source: :question
   private
   def downcase_email
     self.email.downcase! if email.present?
   end
-
+  def generate_api_token
+    loop do
+    self.api_token = SecureRandom.urlsafe_base64(32)
+    break unless User.exists?(api_token: self.api_token)
+  end
+  end
 end

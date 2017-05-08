@@ -69,6 +69,18 @@ def create
 
   def show
     @answer = Answer.new
+    #render 'questions/show'
+
+    #'respond_to' method allows us to render differnt outcomes depending on the format of th erequests. remember that the defualt format for any request is Rails application is HTML.
+
+    respond_to do |format|
+      #the below means that if the format of the request is HTML. then we will render the `show` template (questions/show.html.erb)
+      format.html {render :show}
+      # this ð will render `json` if the format of the request is JSON.
+    # ActiveRecord has a built-in feature to generate JSON from any object of
+    # ActiveRecord.
+    format.json  { render json: @question }
+    end
   end
 
   def index
@@ -84,14 +96,14 @@ def create
   end
 
   def update
-    if !(can? :edit, @question)
-      redirect_to root_path, alert: 'acess denied'
-    elsif @question.update(question_params)
-      redirect_to question_path(@question), notice: 'Question updated'
-    else
-      render :edit
+      if !(can? :edit, @question)
+        redirect_to root_path, alert: 'access denied'
+      elsif @question.update(question_params.merge({ slug: nil }))
+        redirect_to question_path(@question), notice: 'Question updated'
+      else
+        render :edit
+      end
     end
-  end
 
   def destroy
     if can? :destroy, @question
@@ -109,6 +121,11 @@ def create
   end
 
   def question_params
-    params.require(:question).permit([:title, :body])
+    # the line below is what's called "Strong Parameters" feautre that was added
+    # to Rails starting with version 4 to help developer be more explicit about
+    # the parameters that they want to allow the user to submit
+    params.require(:question).permit([:title, :body, { tag_ids: [] } ])
   end
+
+
 end

@@ -20,9 +20,19 @@ match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
 
   # resources :contacts, only: [:new, :create]
 
+  # /api/v1/questions/1.json
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      # /api/v1/questions.json # => INDEX
+      # /api/v1/questions/1.json # => SHOW
+      resources :questions, only: [:index, :show, :create]
+    end
+  end
+
   resources :questions do
     resources :answers, only: [:create, :destroy]
     resources :likes, only: [:create, :destroy]
+    resources :votes, only: [:create, :destroy, :update]
 
     # Nesting resources :answers, only: [:create, :destroy] in resources :questions
     # will create the following routes:

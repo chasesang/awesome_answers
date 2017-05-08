@@ -12,6 +12,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require welcome
+//= require chosen-jquery
 //= require_tree .
 
 

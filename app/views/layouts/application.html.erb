@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Awesome Answers</title>
+    <title>Awesome Answers â</title>
     <%= csrf_meta_tags %>
+
     <%# the two lines below reference the manifest file or what the manifest
-            files generate for us. In development environment, we will see all the
-            files included individually. In production, those will be one file each
-          %>
+        files generate for us. In development environment, we will see all the
+        files included individually. In production, those will be one file each
+      %>
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
   </head>
@@ -16,37 +17,34 @@
 
     <%# link_to is a built-in Rails view helper that generates an `<a>` tag
         the first argument is the anchor text and the second argument is the
-        URL or Path. It's best to use Rails generated path/url helpers
-  <%= link_to 'Home', root_path%>
-
-    <%= link_to 'Home', '/' %>
+        URL or Path. It's best to use Rails generated path/url helpers %>
+    <%= link_to 'Home', root_path %>
     |
     <%= link_to 'About Us', about_path %>
     |
     <%= link_to 'Contact Us', contact_path %>
     |
-    <%= link_to 'New Question', new_question_path %>
-    |
     <%= link_to 'All Questions', questions_path %>
     |
     <% if user_signed_in? %>
-     Hello <%= current_user.first_name %>,
-    <%= link_to 'Sign Out', sessions_path, method: :delete %>
-    |
-    <%= link_to 'Liked Questions', user_likes_path(current_user) %>
+      Hello <%= current_user.first_name %>,
+      <%= link_to 'Sign Out', sessions_path, method: :delete %>
+      |
+      <%= link_to 'Liked Questions', user_likes_path(current_user) %>
     <% else %>
-    <%= link_to 'Sign Up', new_user_path %>
-    |
-    <%= link_to 'Sign In', new_session_path %>
+      <%= link_to 'Sign Up', new_user_path %>
+      |
+      <%= link_to 'Sign In', new_session_path %>
     <% end %>
     <hr>
-        <% if flash[:notice] %>
-          <div class="flash-notice"><%= flash[:notice] %></div>
-        <% elsif flash[:alert] %>
-          <div class="flash-alert"><%= flash[:alert] %></div>
-        <% end %>
-        <%#= notice || alert %>
-      <hr>
-    <%= yield %>
+    <% if flash[:notice] %>
+      <div class="flash-notice"><%= flash[:notice] %></div>
+    <% elsif flash[:alert] %>
+      <div class="flash-alert"><%= flash[:alert] %></div>
+    <% end %>
+    <hr>
+    <div class='container'>
+      <%= yield %>
+    </div>
   </body>
 </html>
